@@ -1,7 +1,6 @@
 import { addElement } from '../../utils/helpers';
 import { Component } from '../component';
 import html from './homepage.tpl.html';
-
 import { ProductList } from '../productList/productList';
 
 class Homepage extends Component {
