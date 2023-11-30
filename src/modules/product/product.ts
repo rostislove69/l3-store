@@ -3,6 +3,7 @@ import { View } from '../../utils/view';
 import { formatPrice } from '../../utils/helpers'
 import html from './product.tpl.html';
 import { ProductData } from 'types';
+import { analyticService } from '../../services/analytic.service';
 
 type ProductComponentParams = { [key: string]: any };
 
@@ -29,6 +30,24 @@ export class Product {
     this.view.title.innerText = name;
     this.view.price.innerText = formatPrice(salePriceU);
 
-    if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal')
+    if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal');
+
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
+            const type = Object.keys(this.product.log).length === 0 ? "viewCard" : "viewCardPromo";
+            fetch(`/api/getProductSecretKey?id=${id}`)
+              .then((res) => res.json())
+              .then((secretKey) => {
+                analyticService.postAnalyticsData(type, {...this.product, secretKey: secretKey})
+              });
+            observer.unobserve(entry.target);
+          }
+        })
+      },
+      {}
+    );
+    observer.observe(this.view.root);
   }
 }
