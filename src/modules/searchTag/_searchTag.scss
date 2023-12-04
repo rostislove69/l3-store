@@ -1,0 +1,32 @@
+.search-tag{
+  display: flex;
+  align-items: center;
+
+  span{
+    margin-right: 5px;
+  }
+
+  span:last-child {
+    color: red;
+  }
+
+  div{
+    display: flex;
+    background-color: #F6F6FA;
+    border-radius: 8px;
+    padding: 2px 5px;
+  }
+
+  a{
+    font-size: 22px;
+    text-decoration: none;
+    background-image: linear-gradient(to right, #DA15B8, #8D06CC);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.search-tag:last-child{
+  margin-left: 5px;
+}
